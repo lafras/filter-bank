@@ -1,3 +1,5 @@
+import glob
+import os
 import unittest
 import numpy
 import pandas
@@ -14,9 +16,13 @@ class MultiplicationRuleTestCase(unittest.TestCase):
         self.filter_bank = filter_bank.FilterBank(self.uid)
         
 
-    def test_filter_bank(self):
-        
-        luigi.build([self.filter_bank], local_scheduler=True)
+    def test_build(self):
+        self.assertTrue(
+            luigi.build([self.filter_bank], local_scheduler=True)
+        )
+
+
+    def test_allclose(self):
         
         noise = pandas.read_csv(
             'noise/{}.csv'.format(self.uid),
@@ -31,10 +37,13 @@ class MultiplicationRuleTestCase(unittest.TestCase):
         self.assertTrue(
             numpy.allclose(
                 noise[['trend', 'cycle']].sum(axis=1), 
-                seasonless['seasonless']
+                seasonless['seasonless'],
+                rtol=0.5
             )
         )
 
+
     def tearDown(self):
-        """Need to remove all the csvs"""
-        pass
+        
+        for csv in glob.glob('*/{}.csv'.format(self.uid)):
+            os.remove(csv)

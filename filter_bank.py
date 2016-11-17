@@ -103,7 +103,7 @@ class FilterBank(luigi.Task):
     def requires(self):
         
         stop = 4.5*pi
-        steps = 10**3
+        steps = 10**4
 
         signal = NoisySignal(
             uid=self.uid,
@@ -115,7 +115,7 @@ class FilterBank(luigi.Task):
             upstream_task=signal,
             remove_hz=1/7,
             sampling_hz = (steps-1) / stop,
-            hz_band=(1/14, 1/14)
+            hz_band=(1/14, 6/7)
         )
         return cleaned
 
