@@ -1,6 +1,16 @@
+# import enum
+
 import scipy.signal
 
 import pandas
+
+# class FilterTypes(enum.Enum):
+
+#     lowpass = 1
+#     higpass = 2
+#     bandpass = 3
+#     highpass = 4
+
 
 class BaseFilter:
 
@@ -10,6 +20,11 @@ class BaseFilter:
             self.b, self.a, input, axis=0
         )
     
+    def window(self, filter_type):
+        return scipy.signal.butter(
+            self.order, self.Wn, filter_type, analog=False
+        )
+
 
 class BandStop(BaseFilter):
 
@@ -24,10 +39,8 @@ class BandStop(BaseFilter):
         self.order = 2
         self.Wn = (self.hz-self.band[0])/self.nyquist, (self.hz+self.band[0])/self.nyquist
 
-        self.b, self.a = self.window()
+        self.b, self.a = self.window('bandstop')
 
-    def window(self):
-        return scipy.signal.butter(self.order, self.Wn, 'bandstop', analog=False)
 
 
 class LowPass(BaseFilter):
@@ -35,16 +48,11 @@ class LowPass(BaseFilter):
     def __init__(self, hz, sampling):
         
         self.hz = hz
-        # self.threshold = threshold
 
         self.sampling = sampling
         self.nyquist = self.sampling // 2
         
         self.order = 3
-        self.Wn = self.hz / self.nyquist #(self.hz-self.band[0])/self.nyquist, (self.hz+self.band[0])/self.nyquist
+        self.Wn = self.hz / self.nyquist
 
-        self.b, self.a = self.window()
-
-    def window(self):
-        return scipy.signal.butter(self.order, self.Wn, 'lowpass', analog=False)
-
+        self.b, self.a = self.window('lowpass')

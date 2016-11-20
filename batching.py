@@ -11,11 +11,9 @@ import statsmodels.api as sm
 
 import luigi
 
+import filters
+import noisy_signal
 
-def signal():
-    
-
-    return ts, (trend + cycle + season + noise), 1/dt
 
 
 class NoisySignal(luigi.Task):
@@ -37,27 +35,13 @@ class NoisySignal(luigi.Task):
         )
     def run(self):
 
-        ts, dt = linspace(0.0, self.stop, self.steps, retstep=True)
-        
-        # a, b, c = 10, 1/7, 1/31
-        a, b = 2, 1/7
-
-        frame = pandas.DataFrame(
-            data={
-                'trend':  5.0,
-                'cycle':  0.5 * sin(2*pi*a*ts),
-                'season': 1 * sin(2*pi*b*ts),
-                # 'noise':  scipy.stats.norm.rvs(0, 0.3)
-            },
-            index=ts
-        )
-        frame['signal'] = frame.sum(axis=1)
-
+        frame = noisy_signal.noisy_signal(self.stop, self.steps)
 
         with self.output().open('w') as output:
             frame.to_csv(
                 output
             )
+
 
 class RemoveSeasons(luigi.Task):
 
@@ -81,15 +65,10 @@ class RemoveSeasons(luigi.Task):
                 input, index_col=0
             )
 
-        order = 2
-        nyquist = self.sampling_hz / 2
-        window = (self.remove_hz - self.hz_band[0]) / nyquist, (self.remove_hz + self.hz_band[1]) / nyquist
-
-        right, left = scipy.signal.butter(order, window, 'bandstop')
-
-        frame['seasonless'] = scipy.signal.filtfilt(
-            right, left, frame['signal'].values
+        bandstop = filters.BandStop(
+            self.remove_hz, self.sampling_hz, self.hz_band
         )
+        frame['seasonless'] = bandstop(frame['signal'].values)
 
         with self.output().open('w') as output:
             frame.to_csv(
