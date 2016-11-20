@@ -1,5 +1,5 @@
 # filter-bank
-Examples of make filter banks.
+Examples of simple filter banks.
 
 A common task (for me at least) is to find a combination (or sequence) of filters to apply to a signal. `batching.py` uses tasks, targets and workflows. Each filter is a Luigi task and can be combiined into a workflow.
 
