@@ -1,0 +1,6 @@
+{
+  "name": "Undertook",
+  "tagline": "Examples of filter banks using Luigi, Click and RxPy",
+  "body": "# Undertook\r\nExamples of simple filter banks.\r\n\r\nA common task (for me at least) is to find a combination (or sequence) of filters to apply to a signal. These filters can sometimes be complicated and can sometomes be permuted. These are a few (stripped down) examples of what I've used in practice.\r\n\r\n`batching.py` uses tasks, targets and workflows. Each filter is a Luigi task and can be combined into a workflow.\r\n\r\n`streaming.py` uses RxPy (Reactive X for Python). Pandas DataFrames are streamed from function to function. This example also demonstrates the use of pyfilesystems.\r\n\r\n`chaining.py` shows how to build chains of filters using python-click.\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

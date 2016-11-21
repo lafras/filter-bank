@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Undertook by lafras</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Undertook</h1>
+        <p>Examples of filter banks using Luigi, Click and RxPy</p>
+
+        <p class="view"><a href="https://github.com/lafras/undertook">View the Project on GitHub <small>lafras/undertook</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/lafras/undertook/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/lafras/undertook/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/lafras/undertook">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="undertook" class="anchor" href="#undertook" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Undertook</h1>
+
+<p>Examples of simple filter banks.</p>
+
+<p>A common task (for me at least) is to find a combination (or sequence) of filters to apply to a signal. These filters can sometimes be complicated and can sometomes be permuted. These are a few (stripped down) examples of what I've used in practice.</p>
+
+<p><code>batching.py</code> uses tasks, targets and workflows. Each filter is a Luigi task and can be combined into a workflow.</p>
+
+<p><code>streaming.py</code> uses RxPy (Reactive X for Python). Pandas DataFrames are streamed from function to function. This example also demonstrates the use of pyfilesystems.</p>
+
+<p><code>chaining.py</code> shows how to build chains of filters using python-click.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/lafras">lafras</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
